@@ -1,0 +1,76 @@
+Inicio Notas
+
+var cantNotas
+escribir "Cuál será la Cantidad de notas que va a Ingresar?"
+leer(cantNotas)
+
+var notas[cantNotas]
+var nombres[cantNotas]
+var notasMen[cantNotas]
+var notasMay[cantNotas]
+var cantMen = 0
+var cantMay = 0
+var notaMen = 100
+var notaMay = 0
+var i = 0
+
+mientras i < cantNotas hacer
+
+    escribir "Ingrese el nombre"
+    leer(nombres[i])
+    escribir "Ingrese nota"
+    leer(notas[i])
+
+    si notas[i] < notaMen
+
+        cantMen = 0
+        notasMen[cantMen] = i
+        cantMen = cantMen + 1
+
+    sino si notas[i] == notaMen
+
+        notasMen[cantMen] = i
+        cantMen = cantMen + 1
+
+    fin si
+
+    si notas[i] > notaMay
+
+        cantMay = 0
+        notasMay[cantMay] = i
+        cantMay = cantMay + 1
+
+    sino si notas[i] == notaMay
+
+        notasMay[cantMay] = i
+        cantMay = cantMay + 1
+
+    fin si
+
+    i = i + 1;
+
+fin mientras
+
+i = 0
+
+escribir "Notas menores"
+mientras i < cantMen
+
+    escribir nombres[notasMen[i]]
+    escribir notas[notasMen[i]]
+    i = i + 1
+
+fin mientras
+
+i = 0
+
+escribir "Notas mayores"
+mientras i < cantMay
+
+    escribir nombres[notasMay[i]]
+    escribir notas[notasMay[i]]
+    i = i + 1
+
+fin mientras
+
+Fin
