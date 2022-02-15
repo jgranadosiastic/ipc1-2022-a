@@ -1,0 +1,78 @@
+Inicio PagoAguaLuz
+
+	Var opcion
+
+	Hacer
+		Escribir "Opciones:"
+		Escribir "1. Agua"
+		Escribir "2. Luz"
+		Escribir "3. Salir"
+		Leer(opcion)
+		
+		Si (opcion == 1) entonces
+			Llamar calcularPagoAgua()
+		sino si (opcion == 2) entonces
+			Llamar calcularPagoLuz()
+		finsi
+
+	Mientras (opcion != 3)
+
+
+Fin
+
+Inicio Proceso calcularPagoAgua() 
+
+	Var cantidad
+	Var total
+	Var base=20
+	
+	Escribir "Ingrese la cantidad de metros cubicos consumidos: "
+	Leer (cantidad)
+	
+	Si (cantidad >0) && (cantidad <= 5) entonces
+		Escribir "La cuota a pagar de agua es de: Q."
+		Escribir base
+	Sino
+		Si (cantidad >5) && (cantidad <= 15)
+			total = (cantidad * 5) + base
+			Escribir "La cuota a pagar de agua es de: Q."
+			Escribir total
+		Sino 
+			total = (cantidad * 6.5) + base
+			Escribir "La cuota a pagar de agua es de: Q."
+			Escribir total
+		Finsi
+
+	Finsi	
+Fin
+
+
+Inicio Proceso calcularPagoLuz()
+	Var cantidad
+	Var total
+	Var extra
+	
+	Escribir "Ingrese la cantidad de kw/h consumidos: "
+	Leer (cantidad)
+
+	Si (cantidad >=1) && (cantidad <= 50) entonces
+		total = cantidad * 1
+		Escribir "La cuota a pagar de luz es de: Q."
+		Escribir total
+	Sino
+		Si (cantidad >50) && (cantidad <= 100)
+			extra = cantidad - 50
+			total = 50 + (extra * 1.5)
+			Escribir "La cuota a pagar de luz es de: Q."
+			Escribir total
+		Sino 
+			Si (cantidad > 100) entonces
+				extra = cantidad - 100
+				total = (extra * 2) + (50 * 1.5) + 50
+				Escribir "La cuota a pagar de luz es de: Q."
+				Escribir total
+			Finsi
+		Finsi
+
+	Finsi	
+Fin 

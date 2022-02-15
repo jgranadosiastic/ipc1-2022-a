@@ -14,3 +14,4 @@
 *.jar
 *.war
 *.ear
+/IPC1_A_2022/target/
