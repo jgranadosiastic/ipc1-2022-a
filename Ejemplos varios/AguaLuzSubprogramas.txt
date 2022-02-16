@@ -1,6 +1,7 @@
 Inicio PagoAguaLuz
 
 	Var opcion
+	Var total
 
 	Hacer
 		Escribir "Opciones:"
@@ -10,9 +11,11 @@ Inicio PagoAguaLuz
 		Leer(opcion)
 		
 		Si (opcion == 1) entonces
-			Llamar calcularPagoAgua()
+			total = Llamar calcularPagoAgua()
+			Llamar calcularDescuento(total)
 		sino si (opcion == 2) entonces
-			Llamar calcularPagoLuz()
+			total = Llamar calcularPagoLuz()
+			Llamar calcularDescuento(total)
 		finsi
 
 	Mientras (opcion != 3)
@@ -32,6 +35,7 @@ Inicio Proceso calcularPagoAgua()
 	Si (cantidad >0) && (cantidad <= 5) entonces
 		Escribir "La cuota a pagar de agua es de: Q."
 		Escribir base
+		total = base
 	Sino
 		Si (cantidad >5) && (cantidad <= 15)
 			total = (cantidad * 5) + base
@@ -43,7 +47,10 @@ Inicio Proceso calcularPagoAgua()
 			Escribir total
 		Finsi
 
-	Finsi	
+	Finsi
+	
+	retornar total
+		
 Fin
 
 
@@ -75,4 +82,21 @@ Inicio Proceso calcularPagoLuz()
 		Finsi
 
 	Finsi	
+	
+	retornar total
 Fin 
+
+Inicio Proceso calcularDescuento(total) 
+	
+	Var descuento
+	Var nuevoTotal
+
+	si (total > 500) entonces
+		descuento = total * 0.01
+		nuevoTotal = total - descuento
+		Escribir "El todal con descuento es: Q"
+		Escribir nuevoTotal
+	finsi
+
+
+Fin

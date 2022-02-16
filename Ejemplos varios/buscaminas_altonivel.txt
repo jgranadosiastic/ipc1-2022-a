@@ -1,0 +1,27 @@
+
+
+
+buscaminas
+
+1. cantidad 4 de bombas, esto es regla.
+2. ubicar en posiciones aleatorias, matriz de 5x5
+3. seleccionar casilla
+	a. marcar como bomba, o
+	b. levantar
+		1. bomba y acaba el juego, o
+		2. se muestra el numero de bombas al rededor de esa casilla
+
+  Se repite el paso 3 hasta que se descubren todas las bombas o se levanta una bomba y explota.
+  Se repite mientras no se hayan levantado todas las bombas y no haya explotado una bomba
+  
+
+
+A. ddistribuir en posiciones aleatorias
+B. repetir el ciclo en base a condiciones
+	- permitir seleccinar una casilla
+		- marcar como bomba
+			- contar las bombas correctas marcadas
+		- levantar
+			- avisar que se debe acabar el juebo
+			- calcular cuantas bombas hay alrededor
+			

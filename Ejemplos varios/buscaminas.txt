@@ -1,0 +1,81 @@
+
+Inicio Buscaminas
+
+	Var bombas = 4
+	Var matriz[5][5]
+	Var bombasEncontradas = 0
+	Var explotoBomba = falso
+	
+	Mientras(bombasEncontradas != 4 && !explotoBomba) Hacer
+		
+	finmientras
+
+Fin
+
+Inicio Proceso distribuirBombas(unaMatriz[5][5])
+
+	Var posFila
+	Var posColumna
+	Var contador = 0
+	
+	Mientras (contador < bombas) hacer
+		posFila = Llamar aleatorio(0, 4)
+		posColumna = Llamar aleatorio(0, 4)
+		
+		Si (unaMatriz[posFila][posColumna] != "x") entonces
+			unaMatriz[posFila][posColumna] = "x"
+			contador = contador + 1
+		finsi	
+	finmientras
+Fin
+
+Inicio Proceso leerFila()
+	Var fila
+	Escribir "Ingrese la fila de la casilla"
+	Leer(fila)
+	
+	retornar fila
+fin
+
+
+Inicio Proceso leerColumna()
+	Var columna
+	Escribir "Ingrese la column de la casilla"
+	Leer(columna)
+	
+	retornar columna
+
+fin
+
+Inicio Proceso seleccionarCasilla()
+	Var fila
+	Var columna
+	var accion
+	
+	fila = Llamar leerFila()
+	columna = Llamar leerColumna()
+	
+	Escribir "1. marcar como bomba"
+	Escribir "2. levantar"
+	Leer(accion)
+	
+	Si (accion == 1) entonces
+		Llamar marcarComoBomba()
+	sino 
+		Llamar levantarCasilla()
+	finsi
+
+
+fin
+
+Inicio Proceso marcarComoBomba(fila, columna, unaMatriz[5][5])
+	Si (unaMatriz[fila][columna] == "x") entonces
+		bombasEncontradas = bombasEncontradas + 1
+	fin
+fin
+
+
+Inicio Proces levantarCasilla()
+
+	// Pendiente
+fin

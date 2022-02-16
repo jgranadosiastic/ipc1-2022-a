@@ -18,6 +18,7 @@ public class AguaLuzSubprogramas {
      */
     public static void main(String[] args) {
         int opcion;
+        double total;
         Scanner scanner = new Scanner(System.in);
 
         do {
@@ -29,18 +30,20 @@ public class AguaLuzSubprogramas {
 
             opcion = scanner.nextInt();
             if (opcion == 1) {
-                calcularAgua();
-            } else {
-                calcularLuz();
+                total = calcularAgua();
+                calcularDescuento(total);
+            } else if (opcion == 2) {
+                total = calcularLuz();
+                calcularDescuento(total);
             }
         } while (opcion != 3);
         System.out.println("Saliendo del sistema!!");
     }
 
-    public static void calcularAgua() {
+    public static double calcularAgua() {
         Scanner scanner = new Scanner(System.in);
         int cantidad;
-        double total;
+        double total = 0;
         int base = 20;
 
         System.out.println("Ingrese la cantidad de metros cubicos consumidos: ");
@@ -60,12 +63,14 @@ public class AguaLuzSubprogramas {
                 System.out.println(total);
             }
         }
+        
+        return total;
     }
 
-    public static void calcularLuz() {
+    public static double calcularLuz() {
         Scanner scanner = new Scanner(System.in);
         int cantidad;
-        double total;
+        double total = 0;
         int extra;
 
         System.out.println("Ingrese la cantidad de kw/h consumidos: ");
@@ -90,6 +95,20 @@ public class AguaLuzSubprogramas {
                 }
             }
         }
+        
+        return total;
     }
 
+    public static void calcularDescuento(double total) {
+        double descuento;
+        double nuevoTotal;
+        
+        if (total > 500) {
+            descuento = total * 0.01;
+            nuevoTotal = total - descuento;
+            System.out.println("El total con descuento es: Q");
+            System.out.println(nuevoTotal);
+        }
+    }
+    
 }
