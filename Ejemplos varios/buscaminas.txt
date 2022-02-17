@@ -1,26 +1,29 @@
 
 Inicio Buscaminas
-
+	Const tamaño = 5
 	Var bombas = 4
-	Var matriz[5][5]
+	Var matriz[tamaño][tamaño]
 	Var bombasEncontradas = 0
 	Var explotoBomba = falso
+	Var casillasLevantadas = 0
+	
+	Llamar distribuirBombas(matriz)
 	
 	Mientras(bombasEncontradas != 4 && !explotoBomba) Hacer
-		
+		Llamar seleccionarCasilla()
 	finmientras
 
 Fin
 
-Inicio Proceso distribuirBombas(unaMatriz[5][5])
+Inicio Proceso distribuirBombas(unaMatriz[tamaño][tamaño])
 
 	Var posFila
 	Var posColumna
 	Var contador = 0
 	
 	Mientras (contador < bombas) hacer
-		posFila = Llamar aleatorio(0, 4)
-		posColumna = Llamar aleatorio(0, 4)
+		posFila = Llamar aleatorio(0, tamaño - 1)
+		posColumna = Llamar aleatorio(0, tamaño - 1)
 		
 		Si (unaMatriz[posFila][posColumna] != "x") entonces
 			unaMatriz[posFila][posColumna] = "x"
@@ -75,7 +78,39 @@ Inicio Proceso marcarComoBomba(fila, columna, unaMatriz[5][5])
 fin
 
 
-Inicio Proces levantarCasilla()
-
-	// Pendiente
+Inicio Proces levantarCasilla(fila, columna, unaMatriz[5][5])
+	var bombasAlrededor
+	Si (unaMatriz[fila][columna] != "x") entonces
+		casillasLevantadas = casillasLevantadas + 1
+		bombasAlrededor = calcularBombasAlrededor(fila, columna, unaMatriz)
+		unaMatriz[fila][columna] = bombasAlrededor
+	sino 
+		explotoBomba = verdadero
+	fin
+	
 fin
+
+Inicio Proceso calcularBombasAlrededor(fila, columna, unaMatriz[5][5]))
+	retornar cantidadBombasAlrededor
+
+Fin
+
+
+
+Inicio Proceso pintarCampoMinas() 
+	var contadorFilas = 0
+	var contadorColumnas = 0
+	var valor
+	Desde 1 hasta tamaño
+		contadorColumnas = 0
+		Desde 1 hasta tamaño
+			valor = matriz[contadorFilas][contadorColumnas]	
+			Escribir valor
+			contadorColumnas = contadorColumnas +1
+		findesde
+		
+		contadorFilas = contadorFilas + 1
+	
+	findesde
+
+Fin
