@@ -15,7 +15,8 @@ public class Rectangulo {
     }
     
     public Rectangulo() {
-        
+        base = 100;
+        altura = 100;
     }
     
     public int calcularArea() {
@@ -26,4 +27,7 @@ public class Rectangulo {
         return 2 * base + 2 * altura;
     }
     
+    public int devolverBase() {
+        return base;
+    }
 }

@@ -33,6 +33,8 @@ public class MainAlumno {
         }
         
         estudiante.imprimirResumenDatos();
+        estudiante.especificarNombre("ssssss");
+        estudiante.imprimirResumenDatos();
     }
     
 }

@@ -28,6 +28,9 @@ public class MainRectangulo {
         
         System.out.println("El area del rectangulo es: " + rectangulo.calcularArea());
         System.out.println("El perimetro del rectangulo es: " + rectangulo.calcularPerimetro());
+        
+        System.out.println("base de rectangulo2=" + rectangulo2.devolverBase());
+        System.out.println("base de rectangulo=" + rectangulo.devolverBase());
     }
 
 }

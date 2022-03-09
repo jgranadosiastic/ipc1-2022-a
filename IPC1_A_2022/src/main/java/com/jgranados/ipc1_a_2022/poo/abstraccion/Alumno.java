@@ -46,5 +46,9 @@ public class Alumno {
             System.out.println("El estudiante no aprobó");
         }
     }
+    
+    public void especificarNombre(String nuevoNombre) {
+        nombre = nuevoNombre;
+    }
 }
 
