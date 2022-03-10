@@ -22,7 +22,7 @@ public class Jugador extends Personaje {
         
     }
     
-    public void recogerFlechas() {
+    public void recogerFlechas(int cantidad) {
         
     }
     

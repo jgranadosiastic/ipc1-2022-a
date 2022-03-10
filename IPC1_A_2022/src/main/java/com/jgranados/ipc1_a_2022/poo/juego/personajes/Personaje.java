@@ -7,6 +7,11 @@ package com.jgranados.ipc1_a_2022.poo.juego.personajes;
 public class Personaje {
     private int puntosDeDefensa;
     private int puntosDeVida;
+
+    public Personaje() {
+        puntosDeVida = 50;
+        puntosDeDefensa = 5;
+    }
     
     public void atacar() {
         
@@ -14,6 +19,10 @@ public class Personaje {
     
     public void recibirAtaque() {
         
+    }
+    
+    public boolean estaVivo() {
+        return puntosDeVida > 0;
     }
     
     
