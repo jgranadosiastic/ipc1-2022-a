@@ -17,8 +17,10 @@ public class Personaje {
         
     }
     
-    public void recibirAtaque() {
-        
+    public void recibirAtaque(int daño) {
+        int dañoFinal = daño - puntosDeDefensa;
+        dañoFinal = dañoFinal >= 0 ? dañoFinal : 0;
+        puntosDeVida -= dañoFinal;
     }
     
     public boolean estaVivo() {

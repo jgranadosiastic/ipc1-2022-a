@@ -3,6 +3,8 @@ package com.jgranados.ipc1_a_2022.poo.juego.personajes;
 import com.jgranados.ipc1_a_2022.poo.juego.armas.Arco;
 import com.jgranados.ipc1_a_2022.poo.juego.armas.Arma;
 import com.jgranados.ipc1_a_2022.poo.juego.armas.Espada;
+import com.jgranados.ipc1_a_2022.poo.juego.personajes.enemigos.Dragon;
+import com.jgranados.ipc1_a_2022.poo.juego.personajes.enemigos.Troll;
 
 /**
  *
@@ -17,11 +19,11 @@ public class Jugador extends Personaje {
         arco = new Arco();
     }
     
-    public void atacarEspada() {
-        
+    public void atacarEspada(Personaje personajeAtacado) {
+        personajeAtacado.recibirAtaque(espada.calcularDaño());
     }
     
-    public void atacarArco() {
+    public void atacarArco(Personaje personajeAtacado) {
         
     }
     

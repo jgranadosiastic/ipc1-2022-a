@@ -4,6 +4,7 @@ import com.jgranados.ipc1_a_2022.poo.juego.personajes.Jugador;
 import com.jgranados.ipc1_a_2022.poo.juego.personajes.Personaje;
 import com.jgranados.ipc1_a_2022.poo.juego.personajes.enemigos.Enemigo;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  *
@@ -16,23 +17,43 @@ public class Pelea {
     private boolean turno;
 
     public Pelea(Jugador jugador, Enemigo enemigo) {
-        this.jugador = jugador;
-        this.enemigo = enemigo;
+        jugador = jugador;
+        enemigo = enemigo;
     }
 
     public void iniciarPelea() {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+        definirPersonajeInicial();
         do {
-            definirPersonajeInicial();
             Personaje personajeAtaca = obtenerPersonajeAtaca();
             Personaje personajeAtacado = obtenerPersonajeAtacado();
             if (esTurnoJugador()) {
-                // mostrar opciones
+                mostrarOpcionesJugador();
+                opcion = scanner.nextInt();
+                switch (opcion) {
+                    case 1:
+                        jugador.atacarEspada(personajeAtacado);
+                        break;
+                    case 2:
+                        jugador.atacarArco(personajeAtacado);
+                        break;
+                    default:
+                        System.out.println("Perdiste tu turno!!!!");
+                }
+            } else {
+                personajeAtaca.atacar(personajeAtado);
             }
 
             cambiarTurno();
         } while (noHayDerrotado());
     }
 
+    private void mostrarOpcionesJugador() {
+        System.out.println("Con que desea atacar?");
+        System.out.println("1. Espada");
+        System.out.println("2. Arco");
+    }
     private void definirPersonajeInicial() {
         Random random = new Random();
         int val = random.nextInt(100);

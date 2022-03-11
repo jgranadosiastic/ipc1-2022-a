@@ -11,6 +11,16 @@ import java.util.Scanner;
 /**
  *
  * @author jose
+ * public
+ *      acceso desde cualquier clase
+ * private
+ *      acceso unicamente desde la propia clase
+ * protected
+ *      acceso desde la propia clase, desde clases hijas y desde
+ *      clases en el mismo paquete
+ * 
+ * sin modificador
+ *      acceso desde la propia clase y desde clases en el mismo paquete
  */
 public class MotorJuego {
 
@@ -27,7 +37,7 @@ public class MotorJuego {
     /**
      * Registramos el avance del jugador
      */
-    public void registrarAvance() {
+    private void registrarAvance() {
         System.out.println("Avanzamos...");
     }
 
@@ -37,7 +47,7 @@ public class MotorJuego {
      *
      * @return
      */
-    public Personaje generarEnemigo() {
+    private Personaje generarEnemigo() {
         Random random = new Random();
         int val = random.nextInt(100);
 
@@ -50,7 +60,7 @@ public class MotorJuego {
         }
     }
 
-    public int generarFlechas() {
+    private int generarFlechas() {
         Random random = new Random();
         int cantidadFlechas = random.nextInt(6) + 2;
         return cantidadFlechas;
