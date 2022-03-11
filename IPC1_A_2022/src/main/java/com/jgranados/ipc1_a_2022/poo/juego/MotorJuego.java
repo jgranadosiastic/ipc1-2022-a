@@ -72,6 +72,7 @@ public class MotorJuego {
             }
 
         }
+        System.out.println("Te han derrotado...");
     }
 
     private void usarOpciones() {
