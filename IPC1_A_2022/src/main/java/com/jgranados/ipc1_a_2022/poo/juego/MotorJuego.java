@@ -3,6 +3,7 @@ package com.jgranados.ipc1_a_2022.poo.juego;
 import com.jgranados.ipc1_a_2022.poo.juego.personajes.Jugador;
 import com.jgranados.ipc1_a_2022.poo.juego.personajes.Personaje;
 import com.jgranados.ipc1_a_2022.poo.juego.personajes.enemigos.Dragon;
+import com.jgranados.ipc1_a_2022.poo.juego.personajes.enemigos.Enemigo;
 import com.jgranados.ipc1_a_2022.poo.juego.personajes.enemigos.Gargola;
 import com.jgranados.ipc1_a_2022.poo.juego.personajes.enemigos.Troll;
 import java.util.Random;
@@ -39,6 +40,9 @@ public class MotorJuego {
      */
     private void registrarAvance() {
         System.out.println("Avanzamos...");
+        System.out.println("Presiona una tecla...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 
     /**
@@ -52,10 +56,13 @@ public class MotorJuego {
         int val = random.nextInt(100);
 
         if (val >= 0 && val < 39) {
+            System.out.println("Has encontrado un Troll!!!");
             return new Troll();
         } else if (val >= 40 && val < 79) {
+            System.out.println("Has encontrado una Gargola!!!");
             return new Gargola();
         } else {
+            System.out.println("Has encontrado un Dragon!!!");
             return new Dragon();
         }
     }
@@ -67,13 +74,18 @@ public class MotorJuego {
     }
 
     public void jugar() {
+        System.out.println("Iniciando juego...");
+        System.out.println("Presione enter para continuar...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
         while (jugador.estaVivo()) {
             seDaranFlechas = decidirDarFlechas();
             seCrearaEnemigo = decidirCrearEnemigo();
 
             if (seCrearaEnemigo) {
-                // crear pelea
-                System.out.println("crear pelea");
+                Personaje enemigo = generarEnemigo();
+                Pelea pelea = new Pelea(jugador, (Enemigo) enemigo);
+                pelea.iniciarPelea();
             } else {
                 if (seDaranFlechas) {
                     System.out.println("Encontraste flechas...");
@@ -92,7 +104,7 @@ public class MotorJuego {
             System.out.println("2. Recoger flechas");
         }
         Scanner scanner = new Scanner(System.in);
-        int opcion = scanner.nextInt();
+        int opcion = Integer.valueOf(scanner.nextLine());
 
         switch (opcion) {
             case 1:
@@ -135,5 +147,6 @@ public class MotorJuego {
         int cantidad = generarFlechas();
         System.out.println(String.format("Se dieron al jugador %d flechas", cantidad));
         jugador.recogerFlechas(cantidad);
+        System.out.println(String.format("Ahora tienes %d flechas", jugador.obtenerCantidadFlechas()));
     }
 }

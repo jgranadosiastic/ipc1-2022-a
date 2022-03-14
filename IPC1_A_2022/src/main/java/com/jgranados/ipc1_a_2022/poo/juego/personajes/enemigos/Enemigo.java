@@ -8,6 +8,18 @@ import com.jgranados.ipc1_a_2022.poo.juego.personajes.Personaje;
  * @author jose
  */
 public class Enemigo extends Personaje {
-    private Arma arma;
+    protected Arma arma;
+    protected boolean volando;
+
+    public Enemigo() {
+        volando = false;
+    }
     
+    public int atacar(Personaje personajeAtacado) {
+        return personajeAtacado.recibirAtaque(arma.calcularDaño(personajeAtacado));
+    }
+    
+    public boolean estaVolando() {
+        return volando;
+    }
 }

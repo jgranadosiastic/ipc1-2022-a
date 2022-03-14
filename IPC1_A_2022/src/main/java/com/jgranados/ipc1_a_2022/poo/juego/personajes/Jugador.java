@@ -15,20 +15,27 @@ public class Jugador extends Personaje {
     private Arma arco;
 
     public Jugador() {
+        puntosDeVida = 30;
+        puntosDeDefensaInferior = 3;
+        puntosDeDefensaSuperior = 5;
         espada = new Espada();
         arco = new Arco();
     }
     
-    public void atacarEspada(Personaje personajeAtacado) {
-        personajeAtacado.recibirAtaque(espada.calcularDaño());
+    public int atacarEspada(Personaje personajeAtacado) {
+        return personajeAtacado.recibirAtaque(espada.calcularDaño(personajeAtacado));
     }
     
-    public void atacarArco(Personaje personajeAtacado) {
-        
+    public int atacarArco(Personaje personajeAtacado) {
+        return personajeAtacado.recibirAtaque(arco.calcularDaño(personajeAtacado));
     }
     
     public void recogerFlechas(int cantidad) {
         ((Arco) arco).agregarFlechas(cantidad);
+    }
+    
+    public int obtenerCantidadFlechas() {
+        return ((Arco) arco).obtenerCantidadFlechas();
     }
     
 }

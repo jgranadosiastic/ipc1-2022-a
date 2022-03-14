@@ -1,5 +1,6 @@
 package com.jgranados.ipc1_a_2022.poo.juego.armas;
 
+import com.jgranados.ipc1_a_2022.poo.juego.personajes.Personaje;
 import java.util.Random;
 
 /**
@@ -12,7 +13,16 @@ public class Arma {
     private int dañoInferior;
     private int dañoSuperior;
     
-    public int calcularDaño () {
+    public Arma(int dañoInferior, int dañoSuperior) {
+        this.dañoInferior = dañoInferior;
+        this.dañoSuperior = dañoSuperior;
+    }
+    
+    public Arma() {
+        
+    }
+    
+    public int calcularDaño (Personaje personajeAtacado) {
         Random random = new Random();
         return random.nextInt((dañoSuperior - dañoInferior) + 1) + dañoInferior;
     }
