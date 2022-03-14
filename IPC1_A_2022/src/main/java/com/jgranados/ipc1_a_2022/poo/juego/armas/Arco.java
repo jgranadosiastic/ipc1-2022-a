@@ -39,7 +39,7 @@ public class Arco extends Arma {
         return super.calcularDaño(personajeAtacado);
     }
 
-    public int calcularDañoVolador() {
+    private int calcularDañoVolador() {
         Random random = new Random();
         return random.nextInt((dañoSuperiorVolador - dañoInferiorVolador) + 1) + dañoInferiorVolador;
     }
