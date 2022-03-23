@@ -20,10 +20,10 @@ public class NewMain {
         Libro[] libros = new Libro[5];
         
         libros[0] = new Libro("a", "Jose Granados", "POO", "Propio");
-        libros[1] = new Libro("d", "Pedro Ramirez", "Pre calculo", "Editorial Mate");
-        libros[2] = new Libro("f", "Maria Fernandez", "Fisica fundamental", "Editorial Fisica");
+        libros[1] = new Libro("f", "Pedro Ramirez", "Pre calculo", "Editorial Mate");
+        libros[2] = new Libro("z", "Maria Fernandez", "Fisica fundamental", "Editorial Fisica");
         libros[3] = new Libro("x", "Mario Cifuentes", "Compiladores", "Editorial compi");
-        libros[4] = new Libro("y", "Rosa Cajas", "Quimica 1", "Editorial Quimica");
+        libros[4] = new Libro("i", "Rosa Cajas", "Quimica 1", "Editorial Quimica");
         
         for (Libro libro : libros) {
             libro.imprimirDatos();
@@ -33,7 +33,14 @@ public class NewMain {
         System.out.println("Ingrese el isbn a buscar:");
         String isbnABuscar = scanner.nextLine();
         buscarSecuencialmente(isbnABuscar, libros);
+        System.out.println("termino la busqueda secuencial");
+        ordenar(libros);
+        System.out.println("termino la ordenacion");
+        for (Libro libro : libros) {
+            libro.imprimirDatos();
+        }
         buscarBinario(isbnABuscar, libros);
+        System.out.println("termino la busqueda binaria");
         
     }
     
@@ -91,6 +98,18 @@ public class NewMain {
         }
     }
     
-    
+    public static void ordenar(Libro[] arregloAOrdenar) {
+        int n = arregloAOrdenar.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j < n - i; j++) {
+                Libro libroA = arregloAOrdenar[j - 1];
+                Libro libroB = arregloAOrdenar[j];
+                if (libroA.obtenerISBN().compareToIgnoreCase(libroB.obtenerISBN()) > 0) {
+                    arregloAOrdenar[j] = libroA;
+                    arregloAOrdenar[j-1]= libroB;
+                }
+            }
+        }
+    }
     
 }
