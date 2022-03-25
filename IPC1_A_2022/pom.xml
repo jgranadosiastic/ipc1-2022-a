@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.jgranados.ipc1_a_2022.AguaLuzSubprogramas</mainClass>
+                            <mainClass>com.jgranados.ipc1_a_2022.poo.archivostexto.LecturaEscrituraTexto</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
