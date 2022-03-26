@@ -22,7 +22,9 @@ public class lectura {
     public static void main(String[] args) {
         try {
             // TODO code application logic here
-            File doc = new File("/home/marito/Documentos/prueba.txt");
+            Scanner scanner = new Scanner(System.in);
+            String ruta = scanner.nextLine();
+            File doc = new File(ruta);
             Scanner obj = new Scanner(doc);
             int i = 0;
             while (obj.hasNextLine()){

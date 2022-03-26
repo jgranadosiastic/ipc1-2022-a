@@ -5,7 +5,9 @@
 package com.jgranados.ipc1_a_2022.poo.archivos;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
+import java.util.Scanner;
 
 /**
  *
@@ -19,7 +21,8 @@ public class escritura {
     public static void main(String[] args) {
         // TODO code application logic here
         try{    
-            String filePath = "/home/marito/Documentos/prueba.txt";
+            Scanner scanner = new Scanner(System.in);
+            String filePath = scanner.nextLine();
             FileWriter fw = new FileWriter(filePath, true); 
             BufferedWriter bw = new BufferedWriter(fw);
             String lineaRemplazo = "\nnaranja";    

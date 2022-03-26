@@ -6,6 +6,7 @@ package com.jgranados.ipc1_a_2022.poo.archivos;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.Scanner;
 
 /**
  *
@@ -24,7 +25,8 @@ public class main {
         boolean sobreescribir = false;
         for (Fruta fruta : frutas) {
             try{    
-                String filePath = "/home/marito/Documentos/prueba.txt";
+                Scanner scanner = new Scanner(System.in);
+                String filePath = scanner.nextLine();
                 FileWriter fw = new FileWriter(filePath, sobreescribir);
                 BufferedWriter bw = new BufferedWriter(fw);
                 String lineaRemplazo = fruta.escribir();
