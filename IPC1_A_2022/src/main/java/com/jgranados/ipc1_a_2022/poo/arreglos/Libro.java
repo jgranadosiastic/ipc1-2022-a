@@ -40,5 +40,13 @@ public class Libro {
     public boolean tieneISBN(String isbnAComparar) {
         return isbn.equals(isbnAComparar);
     }
+    
+    public String obtenerNombre() {
+        return nombre;
+    }
+    
+    public String obtenerAutor() {
+        return autor;
+    }
         
 }
