@@ -10,6 +10,7 @@ public class Multiplicacion extends Operacion {
         super(numero1, numero2);
     }
     
+    @Override
     public int operar() {
         return numero1 * numero2;
     }
