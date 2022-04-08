@@ -9,5 +9,10 @@ package com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes;
  * @author jose
  */
 public class Cereza extends Imagen {
-    private static final String IMAGEN_PATH = "";
+    private static final String IMAGEN_PATH = "cherry.png";
+
+    public Cereza() {
+        super();
+        establecerImagen(IMAGEN_PATH);
+    }
 }

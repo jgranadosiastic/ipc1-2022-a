@@ -9,5 +9,10 @@ package com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes;
  * @author jose
  */
 public class Uva extends Imagen {
-    private static final String IMAGEN_PATH = "";
+    private static final String IMAGEN_PATH = "grapes.png";
+
+    public Uva() {
+        super();
+        establecerImagen(IMAGEN_PATH);
+    }
 }

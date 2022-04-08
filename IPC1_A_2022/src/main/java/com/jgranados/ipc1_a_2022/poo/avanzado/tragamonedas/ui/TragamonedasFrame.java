@@ -5,17 +5,30 @@
  */
 package com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui;
 
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.ModoJuego;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.ModoJuegoFacil;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.ModoJuegoNormal;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.ModoJuegoPro;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.Imagen;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jose
  */
 public class TragamonedasFrame extends javax.swing.JFrame {
 
+    private ModoJuego modoJuego;
+    private Imagen[] imagenes;
+    private int saldo;
+    private int cantidadApostada;
+
     /**
      * Creates new form TragamonedasFrame
      */
     public TragamonedasFrame() {
         initComponents();
+        reiniciarJuego();
     }
 
     /**
@@ -32,8 +45,8 @@ public class TragamonedasFrame extends javax.swing.JFrame {
         jugarBtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         cantidadInicialSpnr = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        aceptarMonedasBtn = new javax.swing.JButton();
+        retirarseBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         cantidadApostarSpnr = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
@@ -59,9 +72,22 @@ public class TragamonedasFrame extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Ingresar Monedas para Jugar"));
 
-        jButton1.setText("Aceptar");
+        cantidadInicialSpnr.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        cantidadInicialSpnr.setEditor(new javax.swing.JSpinner.NumberEditor(cantidadInicialSpnr, ""));
 
-        jButton2.setText("Retirarse");
+        aceptarMonedasBtn.setText("Aceptar");
+        aceptarMonedasBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarMonedasBtnActionPerformed(evt);
+            }
+        });
+
+        retirarseBtn.setText("Retirarse");
+        retirarseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retirarseBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -73,8 +99,8 @@ public class TragamonedasFrame extends javax.swing.JFrame {
                     .addComponent(cantidadInicialSpnr)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(retirarseBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(aceptarMonedasBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 173, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -84,13 +110,15 @@ public class TragamonedasFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(cantidadInicialSpnr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(aceptarMonedasBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(retirarseBtn)
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Moneadas a apostar"));
+
+        cantidadApostarSpnr.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         jLabel1.setText("Saldo:");
 
@@ -123,12 +151,27 @@ public class TragamonedasFrame extends javax.swing.JFrame {
         juegoMenu.setText("Juego");
 
         facilMenuItem.setText("Facil");
+        facilMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                facilMenuItemActionPerformed(evt);
+            }
+        });
         juegoMenu.add(facilMenuItem);
 
         normalMenuItem.setText("Normal");
+        normalMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                normalMenuItemActionPerformed(evt);
+            }
+        });
         juegoMenu.add(normalMenuItem);
 
         proMenuItem.setText("Pro");
+        proMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proMenuItemActionPerformed(evt);
+            }
+        });
         juegoMenu.add(proMenuItem);
 
         menuPrincipal.add(juegoMenu);
@@ -180,53 +223,174 @@ public class TragamonedasFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jugarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugarBtnActionPerformed
-        // TODO add your handling code here:
+        cantidadApostada = Integer.valueOf(cantidadApostarSpnr.getValue().toString());
+        if (modoJuego.obtenerSaldo() <= 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Ya no tienes saldo",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } else if (modoJuego.obtenerSaldo() < cantidadApostada) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No puedes apostar eso",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } else {
+            ejecutarJugada();
+        }
     }//GEN-LAST:event_jugarBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TragamonedasFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TragamonedasFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TragamonedasFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TragamonedasFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void facilMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facilMenuItemActionPerformed
+        modoJuego = new ModoJuegoFacil(saldo);
+        inicializarJuego("Facil");
+    }//GEN-LAST:event_facilMenuItemActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TragamonedasFrame().setVisible(true);
-            }
-        });
+    private void aceptarMonedasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarMonedasBtnActionPerformed
+        saldo = Integer.valueOf(cantidadInicialSpnr.getValue().toString());
+        if (saldo <= 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "La cantidad debe ser mayor a cero",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Ahora seleccione el modo de jueto. Su saldo es de: " + saldo,
+                    "Juego iniciado",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            activarModosJuego();
+            bloquearEntradaMonedas();
+        }
+    }//GEN-LAST:event_aceptarMonedasBtnActionPerformed
+
+    private void normalMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_normalMenuItemActionPerformed
+        modoJuego = new ModoJuegoNormal(saldo);
+        inicializarJuego("Normal");
+    }//GEN-LAST:event_normalMenuItemActionPerformed
+
+    private void proMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proMenuItemActionPerformed
+        modoJuego = new ModoJuegoPro(saldo);
+        inicializarJuego("Pro");
+    }//GEN-LAST:event_proMenuItemActionPerformed
+
+    private void retirarseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirarseBtnActionPerformed
+        JOptionPane.showMessageDialog(
+                this,
+                "Te retiras con la siguiente cantidad de monedas: " + modoJuego.obtenerSaldo(),
+                "Juego finalizado",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+        reiniciarJuego();
+    }//GEN-LAST:event_retirarseBtnActionPerformed
+
+    private void inicializarJuego(String modo) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Se ha iniciado el modo "+ modo +", ingrese su apuesta y presione el boton Jugar",
+                "Juego iniciado",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+        actualizarSaldo();
+        bloquearModosJuego();
+        activarControlesApuesta();
+    }
+    
+    private void ejecutarJugada() {
+        imagenes = modoJuego.obtenerImagenes();
+        desplegarImagenes();
+        procesarGanancia();
+        actualizarSaldo();
     }
 
+    private void desplegarImagenes() {
+        contenedorImagenesPanel.removeAll();
+        for (Imagen imagen : imagenes) {
+            contenedorImagenesPanel.add(imagen);
+        }
+        contenedorImagenesPanel.validate();
+        contenedorImagenesPanel.repaint();
+    }
+
+    private void procesarGanancia() {
+        int ganancia = modoJuego.obtenerGanancia(
+                cantidadApostada,
+                imagenes
+        );
+
+        if (ganancia < 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Perdiste " + Math.abs(ganancia) + " monedas",
+                    "Perdiste",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Ganaste " + Math.abs(ganancia) + " monedas",
+                    "Perdiste",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+    }
+
+    private void actualizarSaldo() {
+        saldoLbl.setText("" + modoJuego.obtenerSaldo());
+    }
+
+    private void activarModosJuego() {
+        facilMenuItem.setEnabled(true);
+        normalMenuItem.setEnabled(true);
+        proMenuItem.setEnabled(true);
+    }
+
+    private void bloquearModosJuego() {
+        facilMenuItem.setEnabled(false);
+        normalMenuItem.setEnabled(false);
+        proMenuItem.setEnabled(false);
+    }
+    
+    private void bloquearEntradaMonedas() {
+        cantidadInicialSpnr.setEnabled(false);
+        aceptarMonedasBtn.setEnabled(false);
+    }
+
+    private void activarControlesApuesta() {
+        jugarBtn.setEnabled(true);
+        retirarseBtn.setEnabled(true);
+        cantidadApostarSpnr.setEnabled(true);
+    }
+
+    private void reiniciarJuego() {
+        bloquearModosJuego();
+        aceptarMonedasBtn.setEnabled(true);
+        retirarseBtn.setEnabled(false);
+        cantidadApostarSpnr.setValue(1);
+        cantidadInicialSpnr.setValue(1);
+        cantidadApostarSpnr.setEnabled(false);
+        cantidadInicialSpnr.setEnabled(true);
+        jugarBtn.setEnabled(false);
+        contenedorImagenesPanel.removeAll();
+        saldoLbl.setText("");
+        modoJuego = null;
+        imagenes = null;
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aceptarMonedasBtn;
     private javax.swing.JMenu acercaDeMenu;
     private javax.swing.JMenu ayudaMenu;
     private javax.swing.JSpinner cantidadApostarSpnr;
     private javax.swing.JSpinner cantidadInicialSpnr;
     private javax.swing.JPanel contenedorImagenesPanel;
     private javax.swing.JMenuItem facilMenuItem;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -236,6 +400,7 @@ public class TragamonedasFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JMenuItem normalMenuItem;
     private javax.swing.JMenuItem proMenuItem;
+    private javax.swing.JButton retirarseBtn;
     private javax.swing.JLabel saldoLbl;
     // End of variables declaration//GEN-END:variables
 }
