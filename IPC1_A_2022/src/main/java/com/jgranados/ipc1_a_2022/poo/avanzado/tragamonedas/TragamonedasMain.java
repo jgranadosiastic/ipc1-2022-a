@@ -20,5 +20,5 @@ public class TragamonedasMain {
         TragamonedasFrame juego = new TragamonedasFrame();
         juego.setVisible(true);
     }
-    
+
 }

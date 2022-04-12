@@ -5,11 +5,14 @@
  */
 package com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui;
 
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.ControladorImagenesHilo;
 import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.ModoJuego;
 import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.ModoJuegoFacil;
 import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.ModoJuegoNormal;
 import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.ModoJuegoPro;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.exception.TragamonedasException;
 import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.Imagen;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.ImagenHilo;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +23,7 @@ public class TragamonedasFrame extends javax.swing.JFrame {
 
     private ModoJuego modoJuego;
     private Imagen[] imagenes;
+    private ImagenHilo[] imagenesHilo;
     private int saldo;
     private int cantidadApostada;
 
@@ -224,7 +228,7 @@ public class TragamonedasFrame extends javax.swing.JFrame {
 
     private void jugarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jugarBtnActionPerformed
         cantidadApostada = Integer.valueOf(cantidadApostarSpnr.getValue().toString());
-        if (modoJuego.obtenerSaldo() <= 0) {
+        /*if (modoJuego.obtenerSaldo() <= 0) {
             JOptionPane.showMessageDialog(
                     this,
                     "Ya no tienes saldo",
@@ -240,7 +244,18 @@ public class TragamonedasFrame extends javax.swing.JFrame {
             );
         } else {
             ejecutarJugada();
+        }*/
+        try {
+            ejecutarJugadaExcepciones();
+        } catch (TragamonedasException e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
+
     }//GEN-LAST:event_jugarBtnActionPerformed
 
     private void facilMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facilMenuItemActionPerformed
@@ -300,12 +315,21 @@ public class TragamonedasFrame extends javax.swing.JFrame {
         bloquearModosJuego();
         activarControlesApuesta();
     }
-    
+
     private void ejecutarJugada() {
         imagenes = modoJuego.obtenerImagenes();
         desplegarImagenes();
         procesarGanancia();
         actualizarSaldo();
+    }
+
+    private void ejecutarJugadaExcepciones() throws TragamonedasException {
+        imagenesHilo = modoJuego.obtenerImagenesManejoExcepciones();
+        ControladorImagenesHilo controladorHilos = new ControladorImagenesHilo(imagenesHilo, this);
+        controladorHilos.start();
+        //desplegarImagenesHilos();
+        //procesarGananciaExcepciones();
+        //actualizarSaldo();
     }
 
     private void desplegarImagenes() {
@@ -316,7 +340,18 @@ public class TragamonedasFrame extends javax.swing.JFrame {
         contenedorImagenesPanel.validate();
         contenedorImagenesPanel.repaint();
     }
-
+    
+    public void desplegarImagenesHilos() {
+        contenedorImagenesPanel.removeAll();
+        for (ImagenHilo imagen : imagenesHilo) {
+            contenedorImagenesPanel.add(imagen);
+            Thread imagenHilo = new Thread(imagen);
+            imagenHilo.start();
+        }
+        contenedorImagenesPanel.validate();
+        contenedorImagenesPanel.repaint();
+    }
+    
     private void procesarGanancia() {
         int ganancia = modoJuego.obtenerGanancia(
                 cantidadApostada,
@@ -340,7 +375,30 @@ public class TragamonedasFrame extends javax.swing.JFrame {
         }
     }
 
-    private void actualizarSaldo() {
+    public void procesarGananciaExcepciones() throws TragamonedasException {
+        int ganancia = modoJuego.obtenerGananciaManejoExcepciones(
+                cantidadApostada,
+                imagenesHilo
+        );
+
+        if (ganancia < 0) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Perdiste " + Math.abs(ganancia) + " monedas",
+                    "Perdiste",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Ganaste " + Math.abs(ganancia) + " monedas",
+                    "Perdiste",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+    }
+
+    public void actualizarSaldo() {
         saldoLbl.setText("" + modoJuego.obtenerSaldo());
     }
 
@@ -355,16 +413,22 @@ public class TragamonedasFrame extends javax.swing.JFrame {
         normalMenuItem.setEnabled(false);
         proMenuItem.setEnabled(false);
     }
-    
+
     private void bloquearEntradaMonedas() {
         cantidadInicialSpnr.setEnabled(false);
         aceptarMonedasBtn.setEnabled(false);
     }
 
-    private void activarControlesApuesta() {
+    public void activarControlesApuesta() {
         jugarBtn.setEnabled(true);
         retirarseBtn.setEnabled(true);
         cantidadApostarSpnr.setEnabled(true);
+    }
+    
+    public void desactivarControlesApuesta() {
+        jugarBtn.setEnabled(false);
+        retirarseBtn.setEnabled(false);
+        cantidadApostarSpnr.setEnabled(false);
     }
 
     private void reiniciarJuego() {

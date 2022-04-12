@@ -4,10 +4,15 @@
  */
 package com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend;
 
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.exception.TragamonedasException;
 import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.Campana;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.CampanaHilo;
 import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.Cereza;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.CerezaHilo;
 import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.Imagen;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.ImagenHilo;
 import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.Uva;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.UvaHilo;
 import java.util.Random;
 
 /**
@@ -57,6 +62,48 @@ public class ModoJuegoNormal extends ModoJuego {
         return ganancia;
     }
 
+    @Override
+    public int obtenerGananciaManejoExcepciones(int apuesta, ImagenHilo[] imagenes) throws TragamonedasException {
+        if (obtenerSaldo() < apuesta) {
+            throw new TragamonedasException("No puedes apostar esa cantidad de monedas.");
+        }
+        int ganancia;
+        if (imagenes[0] instanceof CampanaHilo && imagenes[1] instanceof CampanaHilo && imagenes[2] instanceof CampanaHilo) {
+            ganancia = 10 * apuesta;
+        } else if (imagenes[0] instanceof UvaHilo && imagenes[1] instanceof UvaHilo && imagenes[2] instanceof UvaHilo) {
+            ganancia = 7 * apuesta;
+        } else if (imagenes[0] instanceof CerezaHilo && imagenes[1] instanceof CerezaHilo && imagenes[2] instanceof CerezaHilo) {
+            ganancia = 5 * apuesta;
+        } else if (imagenes[0] instanceof CerezaHilo && imagenes[1] instanceof CerezaHilo
+                || imagenes[0] instanceof CerezaHilo && imagenes[2] instanceof CerezaHilo
+                || imagenes[1] instanceof CerezaHilo && imagenes[2] instanceof CerezaHilo) {
+            ganancia = 3 * apuesta;
+        } else if (imagenes[0] instanceof CerezaHilo
+                || imagenes[1] instanceof CerezaHilo
+                || imagenes[2] instanceof CerezaHilo) {
+            ganancia = 1 * apuesta;
+        } else {
+            ganancia = -apuesta;
+        }
+        aplicarGanancia(ganancia);
+
+        return ganancia;
+    }
+    
+    @Override
+    public ImagenHilo[] obtenerImagenesManejoExcepciones() throws TragamonedasException {
+        if (obtenerSaldo() <= 0) {
+            throw new TragamonedasException("Ya no tienes saldo.");
+        }
+        
+        ImagenHilo[] imagenes = new ImagenHilo[CANTIDAD_IMAGENES];
+        for (int i = 0; i < CANTIDAD_IMAGENES; i++) {
+            imagenes[i] = generarImagenHilo();
+        }
+
+        return imagenes;
+    }
+
     private Imagen generarImagen() {
         Random random = new Random();
         int val = random.nextInt(100);
@@ -66,6 +113,18 @@ public class ModoJuegoNormal extends ModoJuego {
             return new Uva();
         } else {
             return new Cereza();
+        }
+    }
+
+    private ImagenHilo generarImagenHilo() {
+        Random random = new Random();
+        int val = random.nextInt(100);
+        if (val >= 0 && val < 33) {
+            return new CampanaHilo();
+        } else if (val >= 33 && val <= 67) {
+            return new UvaHilo();
+        } else {
+            return new CerezaHilo();
         }
     }
 

@@ -4,7 +4,9 @@
  */
 package com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend;
 
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.exception.TragamonedasException;
 import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.Imagen;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.ui.imagenes.ImagenHilo;
 
 /**
  *
@@ -27,4 +29,7 @@ public abstract class ModoJuego {
     
     public abstract Imagen[] obtenerImagenes();
     public abstract int obtenerGanancia(int apuesta, Imagen[] imagenes);
+    
+    public abstract ImagenHilo[] obtenerImagenesManejoExcepciones() throws TragamonedasException;
+    public abstract int obtenerGananciaManejoExcepciones(int apuesta, ImagenHilo[] imagenes) throws TragamonedasException;
 }
