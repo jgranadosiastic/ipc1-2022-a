@@ -1,18 +1,18 @@
 package com.jgranados.ipc1_a_2022.poo.avanzado.pilacola;
 
-import com.jgranados.ipc1_a_2022.poo.arreglos.Libro;
+
 
 /**
  *
  * @author jose
  */
-public class PilaLibros {
+public class Pila<T> {
 
-    private Libro[] contenedorLibros;
+    private T[] contenedor;
     private int indiceTope = -1;
 
-    public PilaLibros(int size) {
-        this.contenedorLibros = new Libro[size];
+    public Pila(int size) {
+        this.contenedor = (T[]) new Object[size];
     }
 
     public boolean esVacia() {
@@ -20,7 +20,7 @@ public class PilaLibros {
     }
 
     public boolean estaLlena() {
-        return indiceTope == contenedorLibros.length - 1;
+        return indiceTope == contenedor.length - 1;
     }
 
     /**
@@ -28,12 +28,12 @@ public class PilaLibros {
      * @param libro el libro a apilar
      * @throws PilaException    cuando la pila esta llena
      */
-    public void apilar(Libro libro) throws PilaException {
+    public void apilar(T libro) throws PilaException {
         if (estaLlena()) {
             throw new PilaException("La pila está llena!");
         }
 
-        contenedorLibros[indiceTope + 1] = libro;
+        contenedor[indiceTope + 1] = libro;
         indiceTope++;
     }
 
@@ -43,21 +43,21 @@ public class PilaLibros {
      * @return el elemento desapilado
      * @throws PilaException cuando esta vacia
      */
-    public Libro desapilar() throws PilaException {
+    public T desapilar() throws PilaException {
         if (esVacia()) {
             throw new PilaException("La pila está vacia!");
         }
-        Libro aDesapilar = contenedorLibros[indiceTope];
+        T aDesapilar = contenedor[indiceTope];
         indiceTope--;
 
         return aDesapilar;
     }
 
-    public Libro verTope(Libro libro) throws PilaException {
+    public T verTope(T libro) throws PilaException {
         if (esVacia()) {
             throw new PilaException("La pila está vacia!");
         }
 
-        return contenedorLibros[indiceTope];
+        return contenedor[indiceTope];
     }
 }
