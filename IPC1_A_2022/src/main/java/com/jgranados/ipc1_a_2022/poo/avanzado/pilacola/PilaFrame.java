@@ -58,7 +58,7 @@ public class PilaFrame extends javax.swing.JFrame {
         });
 
         panelPila.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panelPila.setLayout(new java.awt.CardLayout());
+        panelPila.setLayout(new javax.swing.BoxLayout(panelPila, javax.swing.BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,7 +107,7 @@ public class PilaFrame extends javax.swing.JFrame {
                 
                 pila.apilar(etiqueta);
                 textoAPila.setText("");
-                panelPila.add(etiqueta);
+                panelPila.add(etiqueta, 0);
                 this.pack();
             }
         } catch (PilaException e) {
