@@ -6,7 +6,11 @@
 package com.jgranados.ipc1_a_2022.poo.avanzado.pilacola;
 
 import com.jgranados.ipc1_a_2022.poo.arreglos.Libro;
+import com.jgranados.ipc1_a_2022.poo.avanzado.abstractas.FiguraGeometrica;
 import com.jgranados.ipc1_a_2022.poo.avanzado.abstractas.Triangulo;
+import com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.backend.ModoJuego;
+import com.jgranados.ipc1_a_2022.poo.calculadora.backend.Calculadora;
+import com.jgranados.ipc1_a_2022.poo.juego.personajes.enemigos.Enemigo;
 import javax.swing.JButton;
 
 /**
@@ -65,7 +69,18 @@ public class NewMain {
         } catch (PilaException ex) {
             System.out.println(ex.getMessage());
         }
+        
+        // generica multiple
+        GenericaMultiple<Triangulo, Libro, FiguraGeometrica> miGenericaMultiple =
+                new GenericaMultiple<>();
+        
+        miGenericaMultiple.getGenerico1();
+        miGenericaMultiple.operarAlgo(new Triangulo(0, 0, 0, 0));
+        
+        GenericaMultiple<ModoJuego, Calculadora, Enemigo> miGenericaMultiple2 =
+                new GenericaMultiple<>();
 
+        miGenericaMultiple2.getGenerico1();
     }
 
 }
