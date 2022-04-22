@@ -31,7 +31,15 @@ public class ListaEnlazada<T> {
         return longitud;
     }
     
+    public void eliminarElementoEnIndice(int indice) {
+        
+    }
+    
     public void eliminarUltimo() {
+        
+    }
+    
+    public T obtenerContenido(int indice) {
         
     }
 
