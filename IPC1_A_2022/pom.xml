@@ -34,6 +34,12 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    
+                    <archive>
+                        <manifest>
+                            <mainClass>com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.TragamonedasMain</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
@@ -43,7 +49,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.jgranados.ipc1_a_2022.poo.archivostexto.LecturaEscrituraTexto</mainClass>
+                            <mainClass>com.jgranados.ipc1_a_2022.poo.avanzado.tragamonedas.TragamonedasMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
